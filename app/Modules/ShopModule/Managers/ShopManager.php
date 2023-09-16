@@ -58,7 +58,6 @@ class ShopManager
             $product = json_decode($orderData['products']);
             $total += (int)($product->price);
         }
-        $ins_data['user_id'] = random_int(1, 1000);
         $ins_data['total'] = $total;
         return $ins_data;
     }

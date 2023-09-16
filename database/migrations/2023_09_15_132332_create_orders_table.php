@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('promo_code', 6)->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->index(['user_id']);
         });
     }
 

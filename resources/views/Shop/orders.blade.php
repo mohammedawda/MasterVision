@@ -16,15 +16,16 @@
                 <h3 class="mb-4">Add Order</h3>
                 <div id="form-message-warning" class="mb-4"></div> 
                 <div id="form-message-success" class="mb-4">
-                  Your message was sent, thank you!
+                  Order Submitted, thank you!
                 </div>
-                <form method = "POST"  action="{{ url('save/order/'.$shop_id) }}" id="contactForm" name="contactForm" class="contactForm">
+                <form method = "POST"  action="" id="contactForm" name="contactForm" class="contactForm">
                   @csrf
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
                         <label class="label" for="name">Mobile Number</label>
                         <input type="text" class="form-control" name="mobile" id="mobile" placeholder="Mobile">
+                        <small id="mobile_error" class="form-text text-danger"></small> 
                       </div>
                     </div>
                     <div class="col-md-6"> 
@@ -35,6 +36,7 @@
                             <option type="checkbox" value="{{$product}}">{{$product->name}}</option>
                           @endforeach
                         </select>
+                        <small id="products_error" class="form-text text-danger"></small> 
                       </div>
                     </div>
                     <div class="col-md-12">
@@ -67,10 +69,15 @@
           'products': $("select[name='products']").val(),
         },
         success: function(data) {
-          
+          if(data.status == true) {
+            $('#form-message-success').show();
+          }
         },
         error: function(reject) {
-          
+          var response = $.parseJson(reject.responseText);
+          $.each(response.errors, function(key, value){
+            $("#"+ key +  "_error").text(value[0]);
+          });
         }
       });
     });

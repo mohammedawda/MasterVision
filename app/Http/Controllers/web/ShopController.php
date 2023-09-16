@@ -25,6 +25,7 @@ class ShopController extends Controller
     {
         $orderData = $request->all();
         $response = loadModule('shop')->storeOrder($orderData);
+        return $response;
     }    
 
 }
